@@ -16,6 +16,9 @@ base_interval = 0.02
 single_interval = 0
 sys_counter = datetime.datetime.now()
 
+from WatchMan import WatchMan
+watch_man = WatchMan()
+
 while True:
     try:
         for id in mocap_bodies:
@@ -30,6 +33,7 @@ while True:
                         profile=bytearray.fromhex('C105'),
                         data=mocap_body.att_pos_msg)
 
+
         single_interval = (datetime.datetime.now() - sys_counter).total_seconds()
         base_interval = 0.03 - single_interval
         print(len(mocap_bodies), base_interval, single_interval)
@@ -37,7 +41,7 @@ while True:
         if base_interval > 0:
             time.sleep(base_interval)
 
-        serial_port.flushInput()
+        #  serial_port.flushInput()
         sys_counter = datetime.datetime.now()
     except Exception as e:
         print(e)
