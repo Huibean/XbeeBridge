@@ -1,0 +1,6 @@
+serial_name: '/dev/cu.usbserial-AK05H148'
+mocap_pc_ip: "10.0.0.150"
+
+white_list:
+    1: '0013A200415C5D52'
+    2: '0013A200415C5D53'
