@@ -1,15 +1,17 @@
 import yaml
 settings = yaml.load(open('setting.yml'))
 
-mocap_bodies = {}
+from MocapBodyTeam import MocapBodyTeam
+mocap_body_team = MocapBodyTeam()
+
 mocap_pc_ip = settings['mocap_pc_ip']
 serial_name = settings['serial_name']
 white_list = settings['white_list']
 
 import serial
-from xbee import XBee, ZigBee
+from xbee import ZigBee
 
-serial_port = serial.Serial(serial_name, 57600, timeout=0.02)
+serial_port = serial.Serial(serial_name, 57600, write_timeout=0.02, timeout=0.005)
 xbee_device = ZigBee(serial_port)
 
 from pymavlink.mavutil import mavserial
