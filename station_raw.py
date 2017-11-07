@@ -25,17 +25,22 @@ while True:
     try:
         if mocap_body_team.size > 0:
             for msg in mocap_body_team.output_list:
-                xbee_device.send('tx_explicit',
+                #  xbee_device.send('tx_explicit',
+                        #  frame_id=stringToBytes('1'),
+                        #  dest_addr_long=bytearray.fromhex('000000000000FFFF'),
+                        #  src_endpoint=bytearray.fromhex('E8'),
+                        #  dest_endpoint=bytearray.fromhex('E8'),
+                        #  cluster=bytearray.fromhex('0011'),
+                        #  profile=bytearray.fromhex('C105'),
+                        #  data=msg)
+
+                xbee_device.send('tx',
                         frame_id=stringToBytes('1'),
-                        dest_addr_long=bytearray.fromhex('000000000000FFFF'),
-                        src_endpoint=bytearray.fromhex('E8'),
-                        dest_endpoint=bytearray.fromhex('E8'),
-                        cluster=bytearray.fromhex('0011'),
-                        profile=bytearray.fromhex('C105'),
+                        dest_addr=bytearray.fromhex('000000000000FFFF'),
+                        broadcast_radius = bytearray.fromhex('00'),
                         data=msg)
 
-            serial_port.flushInput()
-            time.sleep(0.02)
+            time.sleep(0.01)
         else:
             time.sleep(1)
 
@@ -50,4 +55,6 @@ while True:
 
         #  sys_counter = datetime.datetime.now()
     except Exception as e:
+        #  serial_port.flushOutput()
+        #  print(serial_port.get_settings())
         print(e)
