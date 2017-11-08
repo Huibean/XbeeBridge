@@ -1,4 +1,4 @@
-from system_args import *
+from system_args import mocap_body_team
 
 from NatNetClient import NatNetClient
 from Estimate import receiveNewFrame, receiveRigidBodyFrame
@@ -16,9 +16,13 @@ base_interval = 0.02
 single_interval = 0
 sys_counter = datetime.datetime.now()
 
-from WatchMan import WatchMan
-watch_man = WatchMan()
+#  from WatchMan import WatchMan
+#  watch_man = WatchMan()
 #watch_man.start()
+
+import socket
+data_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+data_socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 100)
 
 time.sleep(4)
 while True:
@@ -34,13 +38,15 @@ while True:
                         #  profile=bytearray.fromhex('C105'),
                         #  data=msg)
 
-                xbee_device.send('tx',
-                        frame_id=stringToBytes('1'),
-                        dest_addr=bytearray.fromhex('000000000000FFFF'),
-                        broadcast_radius = bytearray.fromhex('00'),
-                        data=msg)
+                #  xbee_device.send('tx',
+                        #  frame_id=stringToBytes('1'),
+                        #  dest_addr=bytearray.fromhex('000000000000FFFF'),
+                        #  broadcast_radius = bytearray.fromhex('00'),
+                        #  data=msg)
 
-            time.sleep(0.01)
+                data_socket.sendto(msg, ('255.255.255.255', 49600))
+
+            time.sleep(0.005)
         else:
             time.sleep(1)
 
@@ -56,5 +62,4 @@ while True:
         #  sys_counter = datetime.datetime.now()
     except Exception as e:
         #  serial_port.flushOutput()
-        #  print(serial_port.get_settings())
         print(e)
