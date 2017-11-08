@@ -1,4 +1,4 @@
-from system_args import mocap_body_team
+from system_args import mocap_body_team, mocap_pc_ip
 
 from NatNetClient import NatNetClient
 from Estimate import receiveNewFrame, receiveRigidBodyFrame
